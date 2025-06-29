@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: relatorios-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: relatorios_db
+      MYSQL_USER: relatorios_user
+      MYSQL_PASSWORD: relatorios_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - relatorios-net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: relatorios-app
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/relatorios_db
+      SPRING_DATASOURCE_USERNAME: relatorios_user
+      SPRING_DATASOURCE_PASSWORD: relatorios_pass
+    ports:
+      - "8080:8080"
+    networks:
+      - relatorios-net
+
+volumes:
+  mysql_data:
+
+networks:
+
+relatorios-net:
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+    networks:
+      - relatorios-net
