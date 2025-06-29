@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Relatórios Gerados</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <h1>Relatórios Gerados</h1>
+    <div id="report-list"></div>
+
+    <h2>Criar Novo Relatório</h2>
+    <form id="create-form">
+        <label>Tipo:</label>
+        <input type="text" name="tipoRelatorio" required />
+        <label>Formato:</label>
+        <input type="text" name="formato" required />
+        <label>Nome:</label>
+        <input type="text" name="nomeRelatorio" required />
+        <label>Usuário:</label>
+        <input type="text" name="usuarioSolicitante" required />
+        <button type="submit">Criar</button>
+    </form>
+
+    <div id="message"></div>
+</body>
+</html>
