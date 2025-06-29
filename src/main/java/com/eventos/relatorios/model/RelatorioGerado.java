@@ -1,4 +1,3 @@
-// RelatorioGerado.java
 package com.eventos.relatorios.model;
 
 import lombok.AllArgsConstructor;
@@ -10,10 +9,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import com.google.common.collect.Tables;
-
 @Entity
-Tables(name = "relatorios_gerados")
+@Table(name = "relatorios_gerados")
 @Data
 @Builder
 @NoArgsConstructor
