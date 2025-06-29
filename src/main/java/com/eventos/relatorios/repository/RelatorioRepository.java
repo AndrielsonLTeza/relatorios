@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,10 +102,10 @@ public interface RelatorioRepository extends JpaRepository<RelatorioGerado, Long
     );
     
     // Verificar se usuário possui relatórios em andamento
-    @Query("SELECT COUNT(r) > 0 FROM RelatorioGerado r WHERE r.usuarioSolicitante = :usuario " +
-           "AND r.status IN ('PENDENTE', 'PROCESSANDO')")
-    boolean usuarioPossuiRelatoriosEmAndamento(@Param("usuario") String usuario);
-    
+   // Substitua a query por este método derivado:
+boolean existsByUsuarioSolicitanteAndStatusIn(String usuarioSolicitante, List<String> status);
+
+
     // Buscar estatísticas de relatórios
     @Query("SELECT r.tipoRelatorio, COUNT(r), AVG(r.tempoProcessamento) " +
            "FROM RelatorioGerado r WHERE r.status = 'CONCLUIDO' " +

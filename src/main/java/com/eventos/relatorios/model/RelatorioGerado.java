@@ -10,8 +10,10 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import com.google.common.collect.Tables;
+
 @Entity
-@Table(name = "relatorios_gerados")
+Tables(name = "relatorios_gerados")
 @Data
 @Builder
 @NoArgsConstructor
