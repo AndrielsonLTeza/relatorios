@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8081/api/relatorios";
+const API_URL = "http://localhost:8081/api/relatorios/gerados";
 
 $(document).ready(function () {
     loadReports();
@@ -38,8 +38,7 @@ function loadReports() {
                     <strong>Nome:</strong> ${item.nomeRelatorio}<br>
                     <strong>Status:</strong> ${item.status}<br>
                     <strong>Progresso:</strong> ${item.progresso}%
-                    <button onclick="updateStatus(${item.id})">Marcar Concluído</button>
-                    <button onclick="deleteReport(${item.id})">Excluir</button>
+                    <button onclick="markAsConcluded(${item.id})">Marcar Concluído</button>
                 </div>
             `;
         });
@@ -47,32 +46,21 @@ function loadReports() {
     });
 }
 
-function updateStatus(id) {
+function markAsConcluded(id) {
     $.ajax({
-        url: `${API_URL}/${id}`,
-        type: "PUT",
-        contentType: "application/json",
-        data: JSON.stringify({ status: "CONCLUIDO" }),
+        url: `${API_URL}/${id}/status`,
+        type: "PATCH",
+        data: {
+            status: "CONCLUIDO",
+            progresso: 100,
+            mensagem: "Finalizado"
+        },
         success: function () {
-            showMessage("Status atualizado!");
+            showMessage("Status atualizado para CONCLUIDO!");
             loadReports();
         },
         error: function () {
-            showMessage("Erro ao atualizar.", true);
-        }
-    });
-}
-
-function deleteReport(id) {
-    $.ajax({
-        url: `${API_URL}/${id}`,
-        type: "DELETE",
-        success: function () {
-            showMessage("Relatório excluído!");
-            loadReports();
-        },
-        error: function () {
-            showMessage("Erro ao excluir.", true);
+            showMessage("Erro ao atualizar status.", true);
         }
     });
 }
