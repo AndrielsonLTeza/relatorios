@@ -11,7 +11,8 @@ import java.util.Optional;
 @Repository
 public interface RelatorioGeradoRepository extends JpaRepository<RelatorioGerado, Long> {
     
-    List<RelatorioGerado> findByUsuarioSolicitanteOrderByDataGeracaoDesc(String usuarioSolicitante);
+    List<RelatorioGerado> findByUsuarioSolicitanteOrderByDataSolicitacaoDesc(String usuarioSolicitante);
+
     
     Optional<RelatorioGerado> findByIdAndUsuarioSolicitante(Long id, String usuarioSolicitante);
     
