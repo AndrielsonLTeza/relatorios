@@ -1,7 +1,7 @@
 package com.eventos.relatorios.controller;
 
 import com.eventos.relatorios.model.RelatorioGerado;
-import com.eventos.relatorios.repository.RelatorioRepository;
+import com.eventos.relatorios.repository.RelatorioGeradoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RelatorioGeradoController {
 
-    private final RelatorioRepository relatorioRepository;
+    private final RelatorioGeradoRepository relatorioGeradoRepository;
 
     /**
      * GET /api/relatorios/gerados
@@ -26,7 +26,7 @@ public class RelatorioGeradoController {
      */
     @GetMapping
     public ResponseEntity<List<RelatorioGerado>> listarTodos() {
-        return ResponseEntity.ok(relatorioRepository.findAll());
+        return ResponseEntity.ok(relatorioGeradoRepository.findAll());
     }
 
     /**
@@ -39,7 +39,7 @@ public class RelatorioGeradoController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        Page<RelatorioGerado> result = relatorioRepository.findByUsuarioSolicitante(
+        Page<RelatorioGerado> result = relatorioGeradoRepository.findByUsuarioSolicitante(
                 usuario, PageRequest.of(page, size)
         );
         return ResponseEntity.ok(result);
@@ -51,7 +51,7 @@ public class RelatorioGeradoController {
      */
     @GetMapping("/em-andamento")
     public ResponseEntity<List<RelatorioGerado>> listarEmAndamento() {
-        return ResponseEntity.ok(relatorioRepository.findRelatoriosEmAndamento());
+        return ResponseEntity.ok(relatorioGeradoRepository.findRelatoriosEmAndamento());
     }
 
     /**
@@ -60,7 +60,7 @@ public class RelatorioGeradoController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<RelatorioGerado> buscarPorId(@PathVariable Long id) {
-        Optional<RelatorioGerado> encontrado = relatorioRepository.findById(id);
+        Optional<RelatorioGerado> encontrado = relatorioGeradoRepository.findById(id);
         return encontrado.map(ResponseEntity::ok)
                          .orElse(ResponseEntity.notFound().build());
     }
@@ -77,7 +77,7 @@ public class RelatorioGeradoController {
         relatorio.setDataSolicitacao(LocalDateTime.now());
         relatorio.setMensagemStatus("Aguardando processamento");
 
-        RelatorioGerado salvo = relatorioRepository.save(relatorio);
+        RelatorioGerado salvo = relatorioGeradoRepository.save(relatorio);
         return ResponseEntity.ok(salvo);
     }
 
@@ -93,7 +93,7 @@ public class RelatorioGeradoController {
             @RequestParam(defaultValue = "0") Integer progresso,
             @RequestParam(required = false) String mensagem) {
 
-        int atualizados = relatorioRepository.atualizarStatus(id, status, progresso, mensagem);
+        int atualizados = relatorioGeradoRepository.atualizarStatus(id, status, progresso, mensagem);
         return atualizados > 0 ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
@@ -107,7 +107,7 @@ public class RelatorioGeradoController {
             @PathVariable Long id,
             @RequestParam Integer progresso) {
 
-        int atualizados = relatorioRepository.atualizarProgresso(id, progresso);
+        int atualizados = relatorioGeradoRepository.atualizarProgresso(id, progresso);
         return atualizados > 0 ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
@@ -124,7 +124,7 @@ public class RelatorioGeradoController {
             @RequestParam Long numeroRegistros,
             @RequestParam Long tempoProcessamento) {
 
-        int atualizados = relatorioRepository.finalizarRelatorio(
+        int atualizados = relatorioGeradoRepository.finalizarRelatorio(
                 id,
                 LocalDateTime.now(),
                 caminhoArquivo,
@@ -150,7 +150,7 @@ public class RelatorioGeradoController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        Page<RelatorioGerado> resultado = relatorioRepository.findComFiltros(
+        Page<RelatorioGerado> resultado = relatorioGeradoRepository.findComFiltros(
                 usuario, tipo, status, formato, dataInicio, dataFim, PageRequest.of(page, size)
         );
         return ResponseEntity.ok(resultado);

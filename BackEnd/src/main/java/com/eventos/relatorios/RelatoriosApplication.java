@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan("com.eventos.relatorios.model")
-@EnableJpaRepositories("com.eventos.relatorios.repository")
+@EntityScan("com.eventos.relatorios")
+@EnableJpaRepositories("com.eventos.relatorios")
 public class RelatoriosApplication {
 
     public static void main(String[] args) {

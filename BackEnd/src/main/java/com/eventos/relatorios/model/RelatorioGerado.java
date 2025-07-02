@@ -1,91 +1,188 @@
+// RelatorioGerado.java
 package com.eventos.relatorios.model;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Entity
-@Table(name = "relatorios_gerados")
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "relatorio_gerado")
 public class RelatorioGerado {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column(name = "tipo_relatorio", nullable = false, length = 50)
-    private String tipoRelatorio;
-    
-    @Column(name = "formato", nullable = false, length = 10)
+
+    @Column(nullable = false)
+    private String nome;
+
+    @Column(nullable = false)
+    private String tipo;
+
+    @Column(nullable = false)
     private String formato;
-    
-    @Column(name = "nome_relatorio", nullable = false, length = 200)
-    private String nomeRelatorio;
-    
-    @Column(name = "status", nullable = false, length = 20)
-    private String status; // PENDENTE, PROCESSANDO, CONCLUIDO, ERRO, CANCELADO
-    
-    @Column(name = "progresso")
-    private Integer progresso = 0; // 0-100
-    
-    @Column(name = "data_solicitacao", nullable = false)
-    private LocalDateTime dataSolicitacao;
-    
-    @Column(name = "data_conclusao")
-    private LocalDateTime dataConclusao;
-    
-    @Column(name = "usuario_solicitante", nullable = false, length = 100)
+
+    @Column(nullable = false)
     private String usuarioSolicitante;
-    
-    @Column(name = "caminho_arquivo", length = 500)
-    private String caminhoArquivo;
-    
-    @Column(name = "tamanho_arquivo")
-    private Long tamanhoArquivo; // em bytes
-    
-    @Column(name = "mensagem_status", length = 1000)
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column
+    private Integer progresso;
+
+    @Column
     private String mensagemStatus;
-    
-    @ElementCollection
-    @CollectionTable(
-        name = "relatorio_parametros", 
-        joinColumns = @JoinColumn(name = "relatorio_id")
-    )
-    @MapKeyColumn(name = "chave")
-    @Column(name = "valor", length = 1000)
-    private Map<String, String> parametros;
-    
-    @Column(name = "numero_registros")
-    private Long numeroRegistros; // quantidade de registros no relatório
-    
-    @Column(name = "tempo_processamento")
-    private Long tempoProcessamento; // tempo em milissegundos
-    
-    @PrePersist
-    protected void onCreate() {
-        if (dataSolicitacao == null) {
-            dataSolicitacao = LocalDateTime.now();
-        }
-        if (status == null) {
-            status = "PENDENTE";
-        }
-        if (progresso == null) {
-            progresso = 0;
-        }
+
+    @Column
+    private LocalDateTime dataSolicitacao;
+
+    @Column
+    private LocalDateTime dataGeracao;
+
+    @Column
+    private String arquivoPath;
+
+    @Column
+    private Long tamanhoArquivo;
+
+    @Column
+    private Long numeroRegistros;
+
+    @Column
+    private Long tempoProcessamento;
+
+    // Construtores
+    public RelatorioGerado() {}
+
+    public RelatorioGerado(String nome, String tipo, String formato, String usuarioSolicitante,
+                            String status, Integer progresso, String mensagemStatus,
+                            LocalDateTime dataSolicitacao, LocalDateTime dataGeracao,
+                            String arquivoPath, Long tamanhoArquivo, Long numeroRegistros, Long tempoProcessamento) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.formato = formato;
+        this.usuarioSolicitante = usuarioSolicitante;
+        this.status = status;
+        this.progresso = progresso;
+        this.mensagemStatus = mensagemStatus;
+        this.dataSolicitacao = dataSolicitacao;
+        this.dataGeracao = dataGeracao;
+        this.arquivoPath = arquivoPath;
+        this.tamanhoArquivo = tamanhoArquivo;
+        this.numeroRegistros = numeroRegistros;
+        this.tempoProcessamento = tempoProcessamento;
     }
-    
-    @PreUpdate
-    protected void onUpdate() {
-        if ("CONCLUIDO".equals(status) && dataConclusao == null) {
-            dataConclusao = LocalDateTime.now();
-        }
+
+    // Getters e Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getUsuarioSolicitante() {
+        return usuarioSolicitante;
+    }
+
+    public void setUsuarioSolicitante(String usuarioSolicitante) {
+        this.usuarioSolicitante = usuarioSolicitante;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getProgresso() {
+        return progresso;
+    }
+
+    public void setProgresso(Integer progresso) {
+        this.progresso = progresso;
+    }
+
+    public String getMensagemStatus() {
+        return mensagemStatus;
+    }
+
+    public void setMensagemStatus(String mensagemStatus) {
+        this.mensagemStatus = mensagemStatus;
+    }
+
+    public LocalDateTime getDataSolicitacao() {
+        return dataSolicitacao;
+    }
+
+    public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
+        this.dataSolicitacao = dataSolicitacao;
+    }
+
+    public LocalDateTime getDataGeracao() {
+        return dataGeracao;
+    }
+
+    public void setDataGeracao(LocalDateTime dataGeracao) {
+        this.dataGeracao = dataGeracao;
+    }
+
+    public String getArquivoPath() {
+        return arquivoPath;
+    }
+
+    public void setArquivoPath(String arquivoPath) {
+        this.arquivoPath = arquivoPath;
+    }
+
+    public Long getTamanhoArquivo() {
+        return tamanhoArquivo;
+    }
+
+    public void setTamanhoArquivo(Long tamanhoArquivo) {
+        this.tamanhoArquivo = tamanhoArquivo;
+    }
+
+    public Long getNumeroRegistros() {
+        return numeroRegistros;
+    }
+
+    public void setNumeroRegistros(Long numeroRegistros) {
+        this.numeroRegistros = numeroRegistros;
+    }
+
+    public Long getTempoProcessamento() {
+        return tempoProcessamento;
+    }
+
+    public void setTempoProcessamento(Long tempoProcessamento) {
+        this.tempoProcessamento = tempoProcessamento;
     }
 }
