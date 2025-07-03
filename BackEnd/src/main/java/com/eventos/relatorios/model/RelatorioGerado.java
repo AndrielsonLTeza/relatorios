@@ -1,5 +1,5 @@
-// RelatorioGerado.java
 package com.eventos.relatorios.model;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,68 +11,35 @@ public class RelatorioGerado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome;
+    @Column(name = "nome_relatorio", nullable = false)
+    private String nomeRelatorio;
 
-    @Column(nullable = false)
-    private String tipo;
+    @Column(name = "tipo_relatorio", nullable = false)
+    private String tipoRelatorio;
 
     @Column(nullable = false)
     private String formato;
 
-    @Column(nullable = false)
+    @Column(name = "usuario_solicitante", nullable = false)
     private String usuarioSolicitante;
 
-    @Column(nullable = false)
-    private String status;
-
-    @Column
-    private Integer progresso;
-
-    @Column
-    private String mensagemStatus;
-
-    @Column
-    private LocalDateTime dataSolicitacao;
-
-    @Column
+    @Column(name = "data_geracao", nullable = false)
     private LocalDateTime dataGeracao;
 
-    @Column
-    private String arquivoPath;
-
-    @Column
-    private Long tamanhoArquivo;
-
-    @Column
-    private Long numeroRegistros;
-
-    @Column
-    private Long tempoProcessamento;
-
-    // Construtores
-    public RelatorioGerado() {}
-
-    public RelatorioGerado(String nome, String tipo, String formato, String usuarioSolicitante,
-                            String status, Integer progresso, String mensagemStatus,
-                            LocalDateTime dataSolicitacao, LocalDateTime dataGeracao,
-                            String arquivoPath, Long tamanhoArquivo, Long numeroRegistros, Long tempoProcessamento) {
-        this.nome = nome;
-        this.tipo = tipo;
-        this.formato = formato;
-        this.usuarioSolicitante = usuarioSolicitante;
-        this.status = status;
-        this.progresso = progresso;
-        this.mensagemStatus = mensagemStatus;
-        this.dataSolicitacao = dataSolicitacao;
-        this.dataGeracao = dataGeracao;
-        this.arquivoPath = arquivoPath;
-        this.tamanhoArquivo = tamanhoArquivo;
-        this.numeroRegistros = numeroRegistros;
-        this.tempoProcessamento = tempoProcessamento;
+    public RelatorioGerado() {
     }
 
-    // Getters e Setters
+    public RelatorioGerado(String nomeRelatorio,
+String tipoRelatorio,
+String formato,
+String usuarioSolicitante,
+LocalDateTime dataGeracao) {
+        this.nomeRelatorio = nomeRelatorio;
+        this.tipoRelatorio = tipoRelatorio;
+        this.formato = formato;
+        this.usuarioSolicitante = usuarioSolicitante;
+        this.dataGeracao = dataGeracao;
+    }
 
     public Long getId() {
         return id;
@@ -82,20 +49,20 @@ public class RelatorioGerado {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeRelatorio() {
+        return nomeRelatorio;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeRelatorio(String nomeRelatorio) {
+        this.nomeRelatorio = nomeRelatorio;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getTipoRelatorio() {
+        return tipoRelatorio;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoRelatorio(String tipoRelatorio) {
+        this.tipoRelatorio = tipoRelatorio;
     }
 
     public String getFormato() {
@@ -113,76 +80,10 @@ public class RelatorioGerado {
     public void setUsuarioSolicitante(String usuarioSolicitante) {
         this.usuarioSolicitante = usuarioSolicitante;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getProgresso() {
-        return progresso;
-    }
-
-    public void setProgresso(Integer progresso) {
-        this.progresso = progresso;
-    }
-
-    public String getMensagemStatus() {
-        return mensagemStatus;
-    }
-
-    public void setMensagemStatus(String mensagemStatus) {
-        this.mensagemStatus = mensagemStatus;
-    }
-
-    public LocalDateTime getDataSolicitacao() {
-        return dataSolicitacao;
-    }
-
-    public void setDataSolicitacao(LocalDateTime dataSolicitacao) {
-        this.dataSolicitacao = dataSolicitacao;
-    }
-
     public LocalDateTime getDataGeracao() {
         return dataGeracao;
     }
-
     public void setDataGeracao(LocalDateTime dataGeracao) {
         this.dataGeracao = dataGeracao;
-    }
-
-    public String getArquivoPath() {
-        return arquivoPath;
-    }
-
-    public void setArquivoPath(String arquivoPath) {
-        this.arquivoPath = arquivoPath;
-    }
-
-    public Long getTamanhoArquivo() {
-        return tamanhoArquivo;
-    }
-
-    public void setTamanhoArquivo(Long tamanhoArquivo) {
-        this.tamanhoArquivo = tamanhoArquivo;
-    }
-
-    public Long getNumeroRegistros() {
-        return numeroRegistros;
-    }
-
-    public void setNumeroRegistros(Long numeroRegistros) {
-        this.numeroRegistros = numeroRegistros;
-    }
-
-    public Long getTempoProcessamento() {
-        return tempoProcessamento;
-    }
-
-    public void setTempoProcessamento(Long tempoProcessamento) {
-        this.tempoProcessamento = tempoProcessamento;
     }
 }
